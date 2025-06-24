@@ -1,0 +1,60 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Go-Admin 项目结构指南
+
+## 项目概述
+Go-Admin 是一个用Go语言编写的数据可视化与管理平台构建框架，灵感来源于laravel-admin。
+
+## 核心目录结构
+
+### 核心引擎
+- [engine/engine.go](mdc:engine/engine.go) - 核心引擎入口文件，包含主要的初始化和配置逻辑
+
+### 模块系统 (modules/)
+- [modules/auth/](mdc:modules/auth) - 认证模块，RBAC权限系统
+- [modules/db/](mdc:modules/db) - 数据库连接和操作模块  
+- [modules/config/](mdc:modules/config) - 配置管理模块
+- [modules/ui/](mdc:modules/ui) - 用户界面组件模块
+- [modules/menu/](mdc:modules/menu) - 菜单管理模块
+- [modules/page/](mdc:modules/page) - 页面渲染模块
+- [modules/service/](mdc:modules/service) - 业务服务模块
+- [modules/language/](mdc:modules/language) - 国际化支持模块
+- [modules/logger/](mdc:modules/logger) - 日志模块
+- [modules/file/](mdc:modules/file) - 文件管理模块
+- [modules/system/](mdc:modules/system) - 系统管理模块
+
+### 适配器支持 (adapter/)
+- [adapter/adapter.go](mdc:adapter/adapter.go) - 适配器基础接口定义
+- [adapter/gin/](mdc:adapter/gin) - Gin框架适配器
+- [adapter/echo/](mdc:adapter/echo) - Echo框架适配器
+- [adapter/beego/](mdc:adapter/beego) - Beego框架适配器
+- [adapter/iris/](mdc:adapter/iris) - Iris框架适配器
+- 支持多种Go Web框架的无缝集成
+
+### 插件系统 (plugins/)
+- [plugins/plugins.go](mdc:plugins/plugins.go) - 插件系统核心实现
+- [plugins/admin/](mdc:plugins/admin) - 管理后台插件
+- [plugins/example/](mdc:plugins/example) - 示例插件
+
+### 其他重要目录
+- [template/](mdc:template) - 模板文件
+- [data/](mdc:data) - 数据文件
+- [context/](mdc:context) - 上下文处理
+- [tests/](mdc:tests) - 测试文件
+- [examples/](mdc:examples) - 示例代码
+
+## 配置文件
+- [go.mod](mdc:go.mod) - Go模块定义，包含所有依赖
+- [Makefile](mdc:Makefile) - 构建脚本
+- [docker-compose.yml](mdc:docker-compose.yml) - Docker配置
+- [Dockerfile](mdc:Dockerfile) - Docker镜像构建文件
+
+## 开发说明
+- 这是一个插件化的管理后台框架
+- 支持多种数据库：MySQL, PostgreSQL, SQLite, MSSQL等
+- 支持多种Web框架适配
+- 提供完整的RBAC权限系统
+- 支持主题自定义

@@ -1,0 +1,112 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Go-Admin 架构设计
+
+## 整体架构
+
+Go-Admin采用分层架构设计，主要包含以下层次：
+
+### 1. 表示层 (Presentation Layer)
+- **UI组件**: [modules/ui/](mdc:modules/ui) - 用户界面组件
+- **模板系统**: [template/](mdc:template) - 页面模板
+- **页面渲染**: [modules/page/](mdc:modules/page) - 页面渲染逻辑
+
+### 2. 适配器层 (Adapter Layer)
+- **Web框架适配**: [adapter/](mdc:adapter) - 多框架支持
+- **统一接口**: [adapter/adapter.go](mdc:adapter/adapter.go) - 适配器接口定义
+- 支持的框架：Gin, Echo, Beego, Iris, Fiber, Buffalo等
+
+### 3. 业务逻辑层 (Business Logic Layer)
+- **核心引擎**: [engine/engine.go](mdc:engine/engine.go) - 系统核心
+- **业务服务**: [modules/service/](mdc:modules/service) - 业务逻辑
+- **权限控制**: [modules/auth/](mdc:modules/auth) - RBAC权限系统
+- **菜单管理**: [modules/menu/](mdc:modules/menu) - 菜单系统
+
+### 4. 数据访问层 (Data Access Layer)
+- **数据库模块**: [modules/db/](mdc:modules/db) - 数据库操作
+- **文件管理**: [modules/file/](mdc:modules/file) - 文件系统
+- **配置管理**: [modules/config/](mdc:modules/config) - 配置存储
+
+### 5. 基础设施层 (Infrastructure Layer)
+- **日志系统**: [modules/logger/](mdc:modules/logger) - 日志记录
+- **工具库**: [modules/utils/](mdc:modules/utils) - 通用工具
+- **错误处理**: [modules/errors/](mdc:modules/errors) - 错误管理
+- **常量定义**: [modules/constant/](mdc:modules/constant) - 系统常量
+
+## 设计模式
+
+### 1. 适配器模式 (Adapter Pattern)
+- 用于支持多种Web框架
+- 实现位置: [adapter/](mdc:adapter)
+
+### 2. 插件模式 (Plugin Pattern)
+- 支持功能的动态扩展
+- 实现位置: [plugins/plugins.go](mdc:plugins/plugins.go)
+
+### 3. 单例模式 (Singleton Pattern)
+- 用于全局配置和资源管理
+- 主要在引擎初始化中使用
+
+### 4. 工厂模式 (Factory Pattern)
+- 用于创建不同类型的组件
+- 在各个模块中广泛使用
+
+### 5. 观察者模式 (Observer Pattern)
+- 用于事件通知和状态变更
+- 在系统监控和日志中使用
+
+## 数据流
+
+```
+用户请求 → Web框架适配器 → 路由处理 → 权限验证 → 业务逻辑 → 数据访问 → 响应返回
+```
+
+### 请求处理流程
+1. 用户请求通过Web框架进入系统
+2. 适配器层将请求标准化
+3. 路由系统分发请求到对应处理器
+4. 权限系统验证用户权限
+5. 业务逻辑层处理具体业务
+6. 数据访问层操作数据库
+7. 结果通过模板渲染返回给用户
+
+## 扩展性设计
+
+### 1. 模块化
+- 每个功能模块独立实现
+- 模块间通过接口通信
+- 支持模块的动态加载和卸载
+
+### 2. 插件化
+- 第三方插件支持
+- 插件生命周期管理
+- 插件配置和管理
+
+### 3. 多数据库支持
+- 数据库抽象层
+- 支持MySQL, PostgreSQL, SQLite, MSSQL等
+
+### 4. 主题系统
+- 可自定义的UI主题
+- 模板继承和覆盖
+- 响应式设计支持
+
+## 性能优化
+
+### 1. 缓存策略
+- 页面缓存
+- 数据缓存
+- 静态资源缓存
+
+### 2. 数据库优化
+- 连接池管理
+- 查询优化
+- 索引策略
+
+### 3. 前端优化
+- 静态资源压缩
+- CDN支持
+- 异步加载

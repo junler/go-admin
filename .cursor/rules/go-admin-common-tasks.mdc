@@ -1,0 +1,123 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Go-Admin 常见开发任务
+
+## 快速开始
+
+### 项目初始化
+```bash
+# 安装命令行工具
+go install github.com/GoAdminGroup/adm@latest
+
+# 创建新项目
+mkdir new_project && cd new_project
+adm init web -l cn
+```
+
+## 常见开发任务
+
+### 1. 添加新的数据表管理
+1. 在数据库中创建表结构
+2. 生成对应的Go模型
+3. 创建数据表配置文件
+4. 在 [plugins/admin/](mdc:plugins/admin) 中注册新表
+
+### 2. 自定义页面开发
+1. 在 [modules/page/](mdc:modules/page) 中创建页面组件
+2. 在 [template/](mdc:template) 中添加模板文件
+3. 配置路由和权限
+
+### 3. 插件开发
+1. 参考 [plugins/example/](mdc:plugins/example) 示例
+2. 实现插件接口
+3. 在 [plugins/plugins.go](mdc:plugins/plugins.go) 中注册插件
+
+### 4. 权限配置
+1. 在 [modules/auth/](mdc:modules/auth) 中定义权限规则
+2. 配置角色和权限的关系
+3. 在页面和API中应用权限检查
+
+### 5. 数据库配置
+1. 修改 [modules/config/](mdc:modules/config) 中的数据库配置
+2. 根据需要选择合适的数据库适配器
+3. 配置连接池和其他数据库参数
+
+## 故障排除
+
+### 常见问题
+1. **数据库连接问题**
+   - 检查 [modules/config/](mdc:modules/config) 中的数据库配置
+   - 确认数据库服务是否正常运行
+   - 检查防火墙和网络设置
+
+2. **权限访问错误**
+   - 检查 [modules/auth/](mdc:modules/auth) 中的权限配置
+   - 确认用户角色分配是否正确
+   - 验证权限规则是否生效
+
+3. **页面渲染问题**
+   - 检查 [template/](mdc:template) 中的模板文件
+   - 确认静态资源路径是否正确
+   - 检查 [modules/ui/](mdc:modules/ui) 组件配置
+
+4. **插件加载失败**
+   - 检查 [plugins/plugins.go](mdc:plugins/plugins.go) 中的插件注册
+   - 确认插件依赖是否满足
+   - 查看插件初始化日志
+
+### 调试技巧
+1. 启用详细日志模式
+2. 使用 [modules/logger/](mdc:modules/logger) 记录关键信息
+3. 检查系统状态和性能指标
+4. 使用Go的pprof工具进行性能分析
+
+## 部署相关
+
+### Docker部署
+- 使用 [Dockerfile](mdc:Dockerfile) 构建镜像
+- 配置 [docker-compose.yml](mdc:docker-compose.yml) 进行容器编排
+
+### 生产环境配置
+1. 优化数据库连接池设置
+2. 配置日志轮转和存储
+3. 设置监控和告警
+4. 配置负载均衡和高可用
+
+### 性能优化
+1. 启用缓存机制
+2. 优化数据库查询
+3. 压缩静态资源
+4. 配置CDN加速
+
+## 测试
+
+### 运行测试
+```bash
+# 运行所有测试
+make test
+
+# 运行特定模块测试
+go test ./modules/auth/...
+go test ./modules/db/...
+```
+
+### 测试文件位置
+- 单元测试：各模块目录下的 *_test.go 文件
+- 集成测试：[tests/](mdc:tests) 目录
+- 插件测试：[plugins/plugins_test.go](mdc:plugins/plugins_test.go)
+
+## 代码质量
+
+### 代码规范
+1. 遵循Go语言官方代码规范
+2. 使用gofmt格式化代码
+3. 使用golint检查代码质量
+4. 编写详细的注释和文档
+
+### 依赖管理
+- 所有依赖在 [go.mod](mdc:go.mod) 中管理
+- 定期更新依赖版本
+- 避免引入不必要的依赖

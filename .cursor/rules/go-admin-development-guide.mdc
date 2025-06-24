@@ -1,0 +1,79 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Go-Admin 开发指南
+
+## 开发环境要求
+- Go 1.22.10+
+- 支持的数据库：MySQL, PostgreSQL, SQLite, MSSQL
+- 支持的Web框架：Gin, Echo, Beego, Iris, Fiber等
+
+## 核心概念
+
+### 1. 引擎初始化
+主要通过 [engine/engine.go](mdc:engine/engine.go) 进行系统初始化：
+- 配置数据库连接
+- 初始化适配器
+- 加载插件
+- 设置路由
+
+### 2. 适配器模式
+通过 [adapter/](mdc:adapter) 目录实现多框架支持：
+- 每个Web框架都有对应的适配器实现
+- 统一的接口规范在 [adapter/adapter.go](mdc:adapter/adapter.go)
+
+### 3. 模块化设计
+[modules/](mdc:modules) 目录包含所有功能模块：
+- 每个模块都是独立的功能单元
+- 模块间通过接口进行通信
+- 支持模块的热插拔
+
+### 4. 插件系统
+[plugins/](mdc:plugins) 目录实现插件架构：
+- 插件注册和管理在 [plugins/plugins.go](mdc:plugins/plugins.go)
+- 支持第三方插件开发
+
+## 开发最佳实践
+
+### 代码组织
+1. 新功能优先考虑模块化实现
+2. 使用依赖注入模式
+3. 遵循Go语言规范和惯例
+4. 编写单元测试
+
+### 数据库操作
+- 使用ORM框架进行数据库操作
+- 支持事务处理
+- 数据库配置在 [modules/config/](mdc:modules/config)
+
+### 权限控制
+- 基于RBAC的权限系统
+- 权限配置在 [modules/auth/](mdc:modules/auth)
+- 支持角色和权限的动态分配
+
+### 国际化
+- 多语言支持在 [modules/language/](mdc:modules/language)
+- 支持动态语言切换
+
+## 常用命令
+```bash
+# 初始化新项目
+adm init web -l cn
+
+# 运行测试
+make test
+
+# 构建项目
+make build
+
+# 运行开发服务器
+go run main.go
+```
+
+## 调试技巧
+1. 使用 [modules/logger/](mdc:modules/logger) 进行日志调试
+2. 检查配置文件确保正确性
+3. 查看网络请求和响应
+4. 使用Go的内置调试工具
